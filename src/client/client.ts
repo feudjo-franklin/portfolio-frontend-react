@@ -1,0 +1,15 @@
+import axios from "axios";
+
+const API_VERSION = "/api/v1";
+
+export const fetchGetData = (uri: string) => {
+    const url =`${API_VERSION}${uri}`;
+
+    return axios.get(url)
+    .catch((error: any) => {
+        // Handle exception errors
+        console.error("Error fetching data for URL:", url, "Error", error.message);
+        // You can throw the error again if you want to handle it elsewhere
+        throw error;
+    });
+}
