@@ -13,3 +13,13 @@ export const fetchGetData = (uri: string) => {
         throw error;
     });
 }
+
+const fetchGetDataArrayBuffer = (uri: string) => {
+
+    const url = `${API_VERSION}${uri}`;
+    
+    return axios.get(url, {responseType: 'arraybuffer'});
+   
+}
+
+export {fetchGetDataArrayBuffer};

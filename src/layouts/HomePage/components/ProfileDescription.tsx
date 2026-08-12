@@ -19,7 +19,7 @@ export const ProfileDescription = () => {
         
         fetchGetData(`/auth/profiles/unique_uid/${unique_uid}`)
         .then((response: any) => {
-            console.log(response.data);
+            //console.log(response.data);
             const responseJson = response.data;
 
             const loadedProfile: ProfileModel = {
