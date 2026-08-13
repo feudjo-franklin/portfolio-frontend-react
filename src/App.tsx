@@ -19,7 +19,10 @@ export const App = () => {
           </Route>
           <Route path='/profile'>
             <HomePage />
-          </Route>  
+          </Route>
+          <Route path='/summary'>
+            <p>Thank you for contacting us, we will come back to you very soon</p>
+          </Route> 
         </Switch>
       </div>
       <Footer />

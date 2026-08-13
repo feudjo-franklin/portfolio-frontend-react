@@ -1,4 +1,5 @@
 import axios from "axios";
+import ClientModel from "../models/ClientModel";
 
 const API_VERSION = "/api/v1";
 
@@ -14,6 +15,18 @@ export const fetchGetData = (uri: string) => {
     });
 }
 
+const fetchPostData = (uri: string, payload: ClientModel) => {
+
+    const url = `${API_VERSION}${uri}`;
+    return axios.post(url, payload)
+        .catch( (error: any) => {
+            // Handle exceptions/errors
+            console.error('Error fetching data for URL:', url, 'Error', error.message);
+            // You can throw the error again if you want to handle it elsewhere
+            throw error;
+        })
+}
+
 const fetchGetDataArrayBuffer = (uri: string) => {
 
     const url = `${API_VERSION}${uri}`;
@@ -22,4 +35,4 @@ const fetchGetDataArrayBuffer = (uri: string) => {
    
 }
 
-export {fetchGetDataArrayBuffer};
+export {fetchGetDataArrayBuffer, fetchPostData};
