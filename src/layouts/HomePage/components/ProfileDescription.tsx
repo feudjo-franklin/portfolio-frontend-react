@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { fetchGetData } from "../../../client/client";
+import { Buffer } from "buffer";
+import { fetchGetData, fetchGetDataArrayBuffer } from "../../../client/client";
 import ProfileModel from "../../../models/ProfileModel";
 import { SpinnerLoading } from "../../../Utils/SpinnerLoading";
 
@@ -13,6 +14,7 @@ export const ProfileDescription = () => {
 
     const [profile, setProfile] = useState<ProfileModel>();
     const [isLoading, setIsLoading] = useState(true);
+    const [profilePicture, setProfilePicture] = useState("");
 
 
     useEffect(() => {
@@ -36,6 +38,14 @@ export const ProfileDescription = () => {
             setIsLoading(false);
         })
 
+        fetchGetDataArrayBuffer(`/auth/profiles/${unique_uid}/download-profile-picture`)
+        .then((response: any) => {
+            
+            const buffer = Buffer.from(response.data, 'binary').toString('base64');
+            setProfilePicture(buffer);
+
+        });
+
     }, []);
 
     if (isLoading) {
@@ -49,12 +59,17 @@ export const ProfileDescription = () => {
             <div className="container">
                 <div className="row gy-4 align-items-center">
                     <div className="col-12 col-md-6">
-                        <h1 className="fw-bold">I'm <b className="fw-bold">{`${profile?.firstname} ${profile?.firstname}`}</b>, {profile?.qualification}</h1>
+                        <h1 className="fw-bold">I'm <b className="fw-bold">{`${profile?.firstname} ${profile?.lastname}`}</b>, {profile?.qualification}</h1>
                         <h2 className="fw-light">Welcome to my creative universe</h2>
                         <a href="#skills" className="btn btn-primary mt-5">My web skills</a>
                     </div>
                     <div className="col-12 col-md-6">
-                        <img src={require('./../../../images/portrait.jpg')} alt="John Doe" width="100%" />
+                        {profilePicture?
+                            (<img src={`data:image/jpeg;base64,${profilePicture}`} alt={`${profile?.firstname} ${profile?.lastname}`} width="100%" />)
+                            :
+                            (<img src={require('./../../../images/portrait.jpg')} alt={`${profile?.firstname} ${profile?.lastname}`} width="100%" />)
+                        }
+                        
                     </div>
                 </div>
             </div>
