@@ -86,7 +86,7 @@ export const Projects = () => {
                 <div className="row gy-4 gy-md-0 mt-4">
                     {projects.map((project: ProjectModel) => (
                         <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                            <div className="card">
+                            <div className="card project-card">
                                 <ProjectCard project={project} key={project.id}/>
                                 <Offcanvas project={project} key={project.id} />
                             </div>

@@ -30,11 +30,11 @@ export const ProjectCard: React.FC<{project: ProjectModel}> = (props) => {
     return (
     <>   
         {mainPhotoContent? 
-            (<img src={`data:image/jpeg;base64,${mainPhotoContent}`} className="card-img-top" alt={props.project.title} />)
+            (<img src={`data:image/jpeg;base64,${mainPhotoContent}`} className="card-img-top project-card-image" alt={props.project.title} />)
             :
-            (<img src="https://picsum.photos/300/150?random=1" className="card-img-top" alt={props.project.title} />)            
+            (<img src="https://picsum.photos/300/150?random=1" className="card-img-top project-card-image" alt={props.project.title} />)            
         }
-        <div className="card-body">
+        <div className="card-body project-card-body">
             <h5 className="card-title">{props.project.title}</h5>
             <p className="card-text">{props.project.description}</p>
             <a className="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target={`#project${props.project.id}Info`}
