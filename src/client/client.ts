@@ -17,13 +17,14 @@ export const fetchGetData = (uri: string) => {
 
 const fetchPostData = (uri: string, payload: ClientModel) => {
 
+    console.log("payload: ", payload)
     const url = `${API_VERSION}${uri}`;
     return axios.post(url, payload)
         .catch( (error: any) => {
             // Handle exceptions/errors
             console.error('Error fetching data for URL:', url, 'Error', error.message);
             // You can throw the error again if you want to handle it elsewhere
-            throw error;
+            //throw error;
         })
 }
 

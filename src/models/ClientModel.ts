@@ -3,7 +3,7 @@ export default class ClientModel {
     lastname: string;
     email: string;
     message: string;
-    profileUuid: string;
+    profileUuid: string; // uuid of the profile to contact
     
     constructor (firstname: string, lastname: string, email: string, message: string) {
         this.firstname = firstname;

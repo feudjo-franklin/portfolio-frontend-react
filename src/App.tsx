@@ -4,6 +4,7 @@ import { Navbar } from './layouts/NavbarAndFooter/Navbar';
 import { HomePage } from './layouts/HomePage/HomePage';
 import { Footer } from './layouts/NavbarAndFooter/Footer';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { Summary } from './layouts/Summary/Summary';
 
 export const App = () => {
 
@@ -21,7 +22,7 @@ export const App = () => {
             <HomePage />
           </Route>
           <Route path='/summary'>
-            <p>Thank you for contacting us, we will come back to you very soon</p>
+            <Summary />
           </Route> 
         </Switch>
       </div>

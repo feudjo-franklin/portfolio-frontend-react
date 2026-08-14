@@ -7,7 +7,7 @@ export const ContactMe = () => {
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    let unique_uid: string = queryParams.get("unique_uid") || "";
+    const unique_uid: string = queryParams.get("unique_uid") || "";
 
     const history = useHistory(); 
 
@@ -24,7 +24,9 @@ export const ContactMe = () => {
         return text.length > 0;
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
         // Reset previous errors
         setErrors({firstname: "", lastname: "", email: "", message: ""})
 
@@ -51,10 +53,12 @@ export const ContactMe = () => {
         }
 
         fetchPostData("/clients/add", client)
-        .then(() => {
+        .then((response: any) => {
 
-            history.push("/summary")
-            window.location.reload()
+            const responseJson = response.data;
+            console.log(responseJson);
+            history.push(`/summary?unique_uid=${unique_uid}`, {client: responseJson});
+            //window.location.reload();
         })
     }
     return (
@@ -70,7 +74,8 @@ export const ContactMe = () => {
                     <div className="col-12 offset-md-1 col-md-6">
 
                         {/* <!-- Form --> */}
-                        <form className="row">
+                        <form className="row"
+                            onSubmit={handleSubmit}>
                             <div className="col-6 my-2">
                                 <label htmlFor="firstname" className="form-label">First name</label>
                                 <input name="firstname" type="text" 
@@ -85,6 +90,7 @@ export const ContactMe = () => {
                                     className="form-control" id="lastname"
                                     value={client.lastname}
                                     onChange={(e) => setClient({...client, lastname: e.target.value})} />
+                                {errors.lastname !== "" && <p style={{ color: 'red' }}>{errors.lastname}</p>}
                             </div>
                             <div className="col-12 my-2">
                                 <label htmlFor="email" className="form-label">Email address</label>
@@ -93,15 +99,17 @@ export const ContactMe = () => {
                                     value={client.email}
                                     onChange={(e) => setClient({...client, email: e.target.value})} />
                             </div>
+                            {errors.email !== "" && <p style={{ color: 'red' }}>{errors.email}</p>}
                             <div className="col-12 my-2">
                                 <label htmlFor="message" className="form-label">Message</label>
                                 <textarea name="message" className="form-control"
                                     id="message" rows={3}
                                     value={client.message}
                                     onChange={(e) => setClient({...client, message: e.target.value})}></textarea>
+                                {errors.message !== "" && <p style={{ color: 'red' }}>{errors.message}</p>}
                             </div>
                             <div className="col-12 my-2">
-                                <button type="submit" className="btn btn-primary w-100" onClick={handleSubmit}>Submit</button>
+                                <button type="submit" className="btn btn-primary w-100">Submit</button>
                             </div>
                         </form>
 
