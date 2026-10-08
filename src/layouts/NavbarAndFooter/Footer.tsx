@@ -29,6 +29,7 @@ export const Footer = () => {
                 lastname: responseJson.lastname,
                 qualification: responseJson.qualification,
                 authorities: responseJson.authorities,
+                githubLink: responseJson.githubLink,
                 publicLinks: responseJson.publicLinks,
             };
 

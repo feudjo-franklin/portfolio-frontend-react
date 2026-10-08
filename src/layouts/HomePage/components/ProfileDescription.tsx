@@ -31,12 +31,14 @@ export const ProfileDescription = () => {
                 lastname: responseJson.lastname,
                 qualification: responseJson.qualification,
                 authorities: responseJson.authorities,
+                githubLink: responseJson.githubLink,
                 publicLinks: responseJson.publicLinks,
             };
 
             setProfile(loadedProfile);
             setIsLoading(false);
         })
+        console.log("profile : ", profile)
 
         fetchGetDataArrayBuffer(`/auth/profiles/${unique_uid}/download-profile-picture`)
         .then((response: any) => {
@@ -61,7 +63,8 @@ export const ProfileDescription = () => {
                     <div className="col-12 col-md-6">
                         <h1 className="fw-bold">I'm <b className="fw-bold">{`${profile?.firstname} ${profile?.lastname}`}</b>, {profile?.qualification}</h1>
                         <h2 className="fw-light">Welcome to my creative universe</h2>
-                        <a href="#skills" className="btn btn-primary mt-5">My web skills</a>
+                        <a href="#skills" className="btn btn-primary mt-5">My web skills</a><br/>
+                        <a href={`${profile?.githubLink}`}>Github</a>
                     </div>
                     <div className="col-12 col-md-6">
                         {profilePicture?

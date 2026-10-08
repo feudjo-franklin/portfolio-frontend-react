@@ -30,6 +30,7 @@ export const Navbar = () => {
                 lastname: responseJson.lastname,
                 qualification: responseJson.qualification,
                 authorities: responseJson.authorities,
+                githubLink: responseJson.githubLink,
                 publicLinks: responseJson.publicLinks,
             };
 
