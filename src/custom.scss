@@ -1,0 +1,8 @@
+// 1. Tes overrides AVANT Bootstrap
+$primary: #20c997;      // ta couleur primaire
+$secondary: #6c757d;    // ta couleur secondaire
+$enable-shadows: true;  // active les ombres
+$enable-rounded: false; // désactive les arrondis
+
+// 2. Import de Bootstrap complet
+@import "~bootstrap/scss/bootstrap";
