@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Navbar } from './layouts/NavbarAndFooter/Navbar';
 import { HomePage } from './layouts/HomePage/HomePage';

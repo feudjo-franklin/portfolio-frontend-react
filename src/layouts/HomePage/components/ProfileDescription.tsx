@@ -4,6 +4,7 @@ import { Buffer } from "buffer";
 import { fetchGetData, fetchGetDataArrayBuffer } from "../../../client/client";
 import ProfileModel from "../../../models/ProfileModel";
 import { SpinnerLoading } from "../../../Utils/SpinnerLoading";
+import SocialNetworkModel from "../../../models/SocialNetworkModel";
 
 export const ProfileDescription = () => {
 
@@ -24,6 +25,19 @@ export const ProfileDescription = () => {
             //console.log(response.data);
             const responseJson = response.data;
 
+            const loadedSocialNetworks: SocialNetworkModel[] = [];
+
+            for(const key in responseJson.socialNetworkViewDTOS){
+                const socialNetwork: SocialNetworkModel = {
+                    id: responseJson.socialNetworkViewDTOS[key].id,
+                    name: responseJson.socialNetworkViewDTOS[key].name,
+                    iconId: responseJson.socialNetworkViewDTOS[key].iconId,
+                    url: responseJson.socialNetworkViewDTOS[key].url,
+                    displayOrder: responseJson.socialNetworkViewDTOS[key].displayOrder
+                }
+                loadedSocialNetworks.push(socialNetwork);
+            }
+
             const loadedProfile: ProfileModel = {
                 id: responseJson.id,
                 email: responseJson.email,
@@ -32,7 +46,7 @@ export const ProfileDescription = () => {
                 qualification: responseJson.qualification,
                 authorities: responseJson.authorities,
                 githubLink: responseJson.githubLink,
-                publicLinks: responseJson.publicLinks,
+                socialNetworks: loadedSocialNetworks
             };
 
             setProfile(loadedProfile);
@@ -48,7 +62,7 @@ export const ProfileDescription = () => {
 
         });
 
-    }, []);
+    }, [unique_uid]);
 
     if (isLoading) {
         return (

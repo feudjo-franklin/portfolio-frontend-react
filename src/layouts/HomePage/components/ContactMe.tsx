@@ -13,6 +13,7 @@ export const ContactMe = () => {
 
     const [client, setClient] = useState<ClientModel>({firstname: "", lastname: "", email: "", message: "", profileUuid: unique_uid});
     const [errors, setErrors] = useState({firstname: "", lastname: "", email: "", message: ""});
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const valiateEmail = () => {
         // Basic email format validation
@@ -52,20 +53,40 @@ export const ContactMe = () => {
             return;
         }
 
-        fetchPostData("/clients/add", client)
+        // 👇 Affiche l'état "envoi en cours"
+        setIsSubmitting(true);
+
+        try {
+            const response: any = await fetchPostData("/clients/add", client);
+            const responseJson = response.data;
+
+            console.log(responseJson);
+
+            // 👇 Petit délai pour que l'utilisateur voie la transition
+            setTimeout(() => {
+                history.push(`/summary?unique_uid=${unique_uid}`, { client: responseJson });
+            }, 1000);   // 1 seconde — ajuste selon ton goût (500-1500ms)
+
+        } catch (error) {
+            console.error(error);
+            setIsSubmitting(false);   // 👈 ré-active le bouton en cas d'erreur
+            setErrors((prev) => ({ ...prev, message: 'Something went wrong. Please try again.' }));
+        }
+
+        /*fetchPostData("/clients/add", client)
         .then((response: any) => {
 
             const responseJson = response.data;
             console.log(responseJson);
             history.push(`/summary?unique_uid=${unique_uid}`, {client: responseJson});
             //window.location.reload();
-        })
+        })*/
     }
     return (
         <section id="contact" className="py-5 bg-light">
             <div className="container">
-                <h2 className="mb-0">Have a web design project in mind?</h2>
-                <h3 className="fw-light fs-5">Let's discuss it over a coffee!</h3>
+                <h2 className="mb-0">Need a developer you can rely on?</h2>
+                <h3 className="fw-light fs-5">Let's turn your idea into reality!</h3>
 
                 <div className="row gy-4 mt-4">
                     <div className="col-12 col-md-5">
@@ -109,7 +130,18 @@ export const ContactMe = () => {
                                 {errors.message !== "" && <p style={{ color: 'red' }}>{errors.message}</p>}
                             </div>
                             <div className="col-12 my-2">
-                                <button type="submit" className="btn btn-primary w-100">Submit</button>
+                                <button type="submit" className="btn btn-primary w-100"
+                                    disabled={isSubmitting}
+                                >
+                                   {isSubmitting ? (
+                                        <>
+                                            <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                            Sending...
+                                        </>
+                                        ) : (
+                                            'Send message'
+                                        )}
+                                </button>
                             </div>
                         </form>
 

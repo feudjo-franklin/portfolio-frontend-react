@@ -50,6 +50,11 @@ export const Projects = () => {
                     loadedPhotos.push(photo);
                 }
 
+                const loadedTechStacks: string[] = [];
+                for(const key3 in responseJson[key].techStackDTOS){
+                    loadedTechStacks.push(responseJson[key].techStackDTOS[key3].name);
+                }
+
                 loadedProjects.push(
                     {
                         id: responseJson[key].id,
@@ -57,7 +62,8 @@ export const Projects = () => {
                         description: responseJson[key].description,
                         mainPhoto: loadedMainPhoto,
                         photos: loadedPhotos,
-                        techStacks: responseJson[key].techStackDTOS
+                        githubLink: responseJson[key].githubLink,
+                        techStacks: loadedTechStacks
                     }
                 );
             }

@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import ProfileModel from "../../models/ProfileModel";
 import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { fetchGetData } from "../../client/client";
+import SocialNetworkModel from "../../models/SocialNetworkModel";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getSocialIcon } from "../../Utils/icons/socialIcons";
 
 export const Footer = () => {
 
@@ -22,6 +25,19 @@ export const Footer = () => {
             console.log(response.data);
             const responseJson = response.data;
 
+            const loadedSocialNetworks: SocialNetworkModel[] = [];
+
+            for(const key in responseJson.socialNetworkViewDTOS){
+                const socialNetwork: SocialNetworkModel = {
+                    id: responseJson.socialNetworkViewDTOS[key].id,
+                    name: responseJson.socialNetworkViewDTOS[key].name,
+                    iconId: responseJson.socialNetworkViewDTOS[key].iconId,
+                    url: responseJson.socialNetworkViewDTOS[key].url,
+                    displayOrder: responseJson.socialNetworkViewDTOS[key].displayOrder
+                }
+                loadedSocialNetworks.push(socialNetwork);
+            }
+
             const loadedProfile: ProfileModel = {
                 id: responseJson.id,
                 email: responseJson.email,
@@ -30,7 +46,7 @@ export const Footer = () => {
                 qualification: responseJson.qualification,
                 authorities: responseJson.authorities,
                 githubLink: responseJson.githubLink,
-                publicLinks: responseJson.publicLinks,
+                socialNetworks: loadedSocialNetworks
             };
 
             setProfile(loadedProfile);
@@ -64,23 +80,21 @@ export const Footer = () => {
                     </div>
                     <div className="col-12 col-md-4 text-md-end">
                         <ul className="list-inline mb-0">
-                            <li className="list-inline-item">
-                                <a href="#" className="text-decoration-none text-dark" data-bs-toggle="tooltip"
-                                title="LinkedIn">
-                                    <i className="fab fa-linkedin fa-2x"></i>
-                                </a>
-                            </li>
-                            <li className="list-inline-item">
-                                <a href="#" className="text-decoration-none text-dark" data-bs-toggle="tooltip"
-                                title="Instagram">
-                                    <i className="fab fa-instagram-square fa-2x"></i>
-                                </a>
-                            </li>
-                            <li className="list-inline-item">
-                                <a href="#" className="text-decoration-none text-dark" data-bs-toggle="tooltip" title="Twitter">
-                                    <i className="fab fa-twitter-square fa-2x"></i>
-                                </a>
-                            </li>
+                            {
+                                profile?.socialNetworks?.sort((socialNetworkA: SocialNetworkModel, socialNetworkB: SocialNetworkModel) => socialNetworkA.displayOrder - socialNetworkB.displayOrder)
+                                .map((socialNetwork: SocialNetworkModel) => (
+                                    <li className="list-inline-item">
+                                        <a href={socialNetwork.url} className="text-decoration-none text-dark" data-bs-toggle="tooltip"
+                                        title="LinkedIn">
+                                            <FontAwesomeIcon
+                                                icon={getSocialIcon(socialNetwork.iconId)}
+                                            />
+                                        </a>
+                                    </li>
+                                ))
+                            }
+                            
+                            
                         </ul>
                     </div>
                 </div>

@@ -1,3 +1,5 @@
+import SocialNetworkModel from "./SocialNetworkModel";
+
 class ProfileModel {
     id: number;
     email?: string;
@@ -6,9 +8,9 @@ class ProfileModel {
     qualification?: string;
     authorities?: string;
     githubLink?: string;
-    publicLinks?: string[];
+    socialNetworks?: SocialNetworkModel[];
     
-    constructor (id: number, email: string, firstname: string, lastname: string, qualification: string, authorities: string, githubLink: string, publicLinks: string[]){
+    constructor (id: number, email: string, firstname: string, lastname: string, qualification: string, authorities: string, githubLink: string, socialNetworks: SocialNetworkModel[]){
         this.id = id;
         this.email = email;
         this.firstname = firstname;
@@ -16,7 +18,7 @@ class ProfileModel {
         this.qualification = qualification;
         this.authorities = authorities;
         this.githubLink = githubLink;
-        this.publicLinks = publicLinks;
+        this.socialNetworks = socialNetworks;
     }
 }
 
