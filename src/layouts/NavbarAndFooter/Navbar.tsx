@@ -18,6 +18,10 @@ export const Navbar = () => {
 
 
     useEffect(() => {
+        if (!unique_uid) {
+            setIsLoading(false);   // 👈 arrête le spinner
+            return;
+        }
         
         fetchGetData(`/auth/profiles/unique_uid/${unique_uid}`)
         .then((response: any) => {
@@ -67,6 +71,22 @@ export const Navbar = () => {
         </div>
         )
     }
+
+    if (!unique_uid) {
+    return (
+            <header className="py-4">
+                <nav className="navbar navbar-expand-md fixed-top navbar-light bg-light">
+                    <div className="container">
+                        <a className="navbar-brand text-uppercase fw-bold" href="/">
+                            <span className="bg-primary bg-gradient p-1 rounded-3 text-light">Feudjo</span> World
+                        </a>
+                    </div>
+                </nav>
+            </header>
+        );
+    }
+
+    
 
     return(
     <header className="py-4">

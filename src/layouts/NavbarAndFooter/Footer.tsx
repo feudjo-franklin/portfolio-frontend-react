@@ -19,6 +19,10 @@ export const Footer = () => {
 
 
     useEffect(() => {
+        if (!unique_uid) {
+            setIsLoading(false);   // 👈 arrête le spinner
+            return;
+        }
         
         fetchGetData(`/auth/profiles/unique_uid/${unique_uid}`)
         .then((response: any) => {
@@ -53,7 +57,19 @@ export const Footer = () => {
             setIsLoading(false);
         })
 
-    }, []);
+    }, [unique_uid]);
+
+    if (!unique_uid) {
+        return (
+            <footer className="border-top">
+                <div className="container py-5 text-center text-muted">
+                    <small>
+                        © {new Date().getFullYear()} FeudjoWorld — All rights reserved
+                    </small>
+                </div>
+            </footer>
+        );
+    }
 
     if (isLoading) {
         return (

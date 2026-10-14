@@ -60,6 +60,15 @@ export const ProfileDescription = () => {
             const buffer = Buffer.from(response.data, 'binary').toString('base64');
             setProfilePicture(buffer);
 
+        })
+        .catch((error: any) => {
+            if (error.response?.status === 400) {
+                // ⚠️ Pas de photo de profil → on utilise une image par défaut
+                console.log("No profile picture yet");
+                // setPhoto à une image par défaut, ou laisse vide
+            } else {
+                console.error("Error fetching profile picture:", error);
+            }
         });
 
     }, [unique_uid]);
