@@ -13,6 +13,8 @@ export const Navbar = () => {
     const queryParams = new URLSearchParams(location.search);
     let unique_uid = queryParams.get("unique_uid");
 
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     const [profile, setProfile] = useState<ProfileModel>();
     const [isLoading, setIsLoading] = useState(true);
 
@@ -95,11 +97,15 @@ export const Navbar = () => {
                 <a className="navbar-brand text-uppercase fw-bold" href="#">
                     <span className="bg-primary bg-gradient p-1 rounded-3 text-light">{profile?.firstname}</span> {profile?.lastname}
                 </a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button className="navbar-toggler"
+                    type="button" 
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    aria-controls="navbarNav" 
+                    aria-expanded="false" 
+                    aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div className={`collapse navbar-collapse justify-content-end ${isMenuOpen ? 'show' : ''}`} id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
                             <a className="nav-link" href="#johndoe">About me</a>
